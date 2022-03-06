@@ -28,7 +28,7 @@ const NewPost = props => {
 
     const handlePostSubmit = e => {
         e.preventDefault();
-        if(e.target.elements.title.value === '' || e.target.elements[1].value === '' || e.target.elements.slug.value === '' || e.target.elements.description.value === '' || e.target.elements[4].value === ''){
+        if(e.target.elements.title.value === '' || e.target.elements[1].value === '' || e.target.elements.slug.value === '' || e.target.elements.description.value === '' || e.target.thumbnail.value === ''){
             toast.warn('Enter all the details');
             console.log('a');
         }else {
@@ -37,7 +37,7 @@ const NewPost = props => {
             formData.append('categoryId', e.target.elements[1].value);
             formData.append('slug', e.target.elements.slug.value);
             formData.append('description', e.target.elements.description.value);
-            formData.append('image', e.target.elements[4].files[0]);
+            formData.append('thumbnail', e.target.thumbnail.value);
 
             axios.post('/post', formData, {headers: { Authorization: props.token }})
                 .then(res => {
@@ -102,9 +102,12 @@ const NewPost = props => {
 
                                 <div className="form-group mb-3">
                                     <label>Thumbnail:</label>
-                                    <div className="form-file">
-                                        <input type="file" className="form-file-input form-control" />
-                                    </div>
+                                    <input
+                                        type="text"
+                                        className="form-control input-default "
+                                        placeholder="Thumbnail url"
+                                        name='thumbnail'
+                                    />
                                 </div>
 
                                 <button type="submit" className="btn btn-primary">
