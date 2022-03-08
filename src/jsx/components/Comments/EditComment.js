@@ -4,14 +4,14 @@ import axios from "../../../services/axios";
 import {token} from "../../../store/selectors/AuthSelectors";
 import {connect} from "react-redux";
 
-const EditCategory = props => {
+const EditComment = props => {
 
-    const [category, setCategory] = useState({});
+    const [comment, setComment] = useState({});
 
     useEffect(() => {
-        axios.get('/category/' + props.match.params.id)
+        axios.get('/comment/' + props.match.params.id)
             .then(res => {
-                setCategory(res.data);
+                setComment(res.data);
             })
             .catch(err => {
                 if (err.response) {
@@ -24,10 +24,10 @@ const EditCategory = props => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        axios.put(`/category/${props.match.params.id}`, category, {headers: { Authorization: props.token }})
+        axios.put(`/comment/${props.match.params.id}`, comment, {headers: { Authorization: props.token }})
             .then(res => {
                 toast.success(res.data.message);
-                props.history.push('/categories');
+                props.history.push('/comments');
             })
             .catch(err => {
                 if (err.response) {
@@ -40,7 +40,7 @@ const EditCategory = props => {
 
     return (
         <>
-            {category ?
+            {comment ?
                 <div className="col-xl-12 col-lg-12">
                     <div className="card">
                         <div className="card-header">
@@ -55,9 +55,9 @@ const EditCategory = props => {
                                             type="text"
                                             className="form-control input-default "
                                             placeholder="Name"
-                                            name='name'
-                                            value={category.name}
-                                            onChange={e => setCategory({...category, name: e.target.value})}
+                                            name='content'
+                                            value={comment.content}
+                                            onChange={e => setComment({...comment, content: e.target.value})}
                                         />
                                     </div>
 
@@ -83,4 +83,4 @@ const mapStateToProps = (state) => {
     }
 ;
 
-export default connect(mapStateToProps)(EditCategory);
+export default connect(mapStateToProps)(EditComment);

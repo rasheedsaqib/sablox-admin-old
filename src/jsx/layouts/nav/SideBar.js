@@ -284,6 +284,26 @@ const SideBar = () => {
                         </ul>
                     </li>
 
+                    <li className={`${deshBoard.includes(path) ? "mm-active" : ""}`}>
+                        <Link className="has-arrow ai-icon" to="#">
+                            <i className="flaticon-022-copy" />
+                            <span className="nav-text">Links</span>
+                        </Link>
+                        <ul>
+                            <li>
+                                <Link className={`${path === "links" ? "mm-active" : ""}`} to="/links">
+                                    Links
+                                </Link>
+                            </li>
+
+                            <li>
+                                <Link className={`${path === "new-link" ? "mm-active" : ""}`} to="/new-link">
+                                    Add Link
+                                </Link>
+                            </li>
+                        </ul>
+                    </li>
+
                     {/*<li className={`${app.includes(path) ? "mm-active" : ""}`}>*/}
                     {/*    <Link className="has-arrow ai-icon" to="#">*/}
                     {/*        <i className="flaticon-050-info"></i>*/}

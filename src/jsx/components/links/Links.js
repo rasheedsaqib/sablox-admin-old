@@ -1,44 +1,44 @@
 import React, {useEffect, useState} from "react";
 import axios from "../../../services/axios";
+import {toast} from "react-toastify";
+import {Link} from "react-router-dom";
 import {token} from "../../../store/selectors/AuthSelectors";
 import {connect} from "react-redux";
-import {toast} from "react-toastify";
-import {Link} from "@material-ui/core";
 
-const Comments = props => {
+const Links = (props) => {
 
-    const [comments, setComments] = useState([]);
+    const [links, setLinks] = useState([]);
 
     useEffect(() => {
-        getComments();
+        getLinks();
     }, []);
 
-    const getComments = () => {
-        axios.get('/comments')
+    const getLinks = () => {
+        axios.get('/links')
             .then(res => {
-                setComments(res.data);
+                setLinks(res.data);
+                console.log(res.data);
             })
             .catch(err => {
-                if(err.response){
+                if (err.response) {
                     toast.error(err.response.data.message);
-                }else {
-                    toast.error(err.message);
+                } else {
+                    toast.error(err);
                 }
             })
     }
 
-    const deleteComment = (e, commentId) => {
+    const handleDelete = (e, id) => {
         e.preventDefault();
-        console.log(props.token);
-        axios.delete('/comment/' + commentId, {headers: { Authorization: props.token }})
+        axios.delete(`/link/${id}`, {headers: { Authorization: props.token }})
             .then(res => {
                 toast.success(res.data.message);
-                getComments();
+                getLinks();
             })
             .catch(err => {
-                if(err.response){
+                if (err.response) {
                     toast.error(err.response.data.message);
-                }else {
+                } else {
                     toast.error(err);
                 }
             })
@@ -46,9 +46,8 @@ const Comments = props => {
 
     return (
         <div className='col-12'>
-
-            {comments.length === 0 ?
-                <p>No comments found</p>
+            {links.length === 0 ?
+                <p>No links found</p>
                 :
                 <table
                     id="example"
@@ -58,27 +57,32 @@ const Comments = props => {
                 >
                     <thead>
                     <th>Index</th>
-                    <th>Comment</th>
-                    <th>User</th>
+                    <th>Title</th>
+                    <th>Link</th>
+                    <th>Expiry</th>
                     <th>Action</th>
                     </thead>
                     <tbody>
-                    {comments.map((comment, index) => {
-                        return(
-                            <tr key={comment._id}>
-                                <td>{index+1}</td>
-                                <td>{comment.content}</td>
-                                <td>{`${comment.user.firstName} ${comment.user.lastName}`}</td>
+                    {links.map((link, index) => {
+                        return (
+                            <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{link.title}</td>
+                                <td>{link.link}</td>
+                                <td>{link.expiresIn}</td>
                                 <td>
                                     <div className="d-flex">
-                                        <a
-                                            href={`/edit-comment/${comment._id}`}
+                                        <a href={link.url} target="_blank" className="btn btn-primary shadow btn-xs sharp me-1">
+                                            <i className="fas fa-eye" />
+                                        </a>
+                                        <Link
+                                            to={`/edit-link/${link._id}`}
                                             className="btn btn-primary shadow btn-xs sharp me-1"
                                         >
                                             <i className="fas fa-pen"></i>
-                                        </a>
+                                        </Link>
                                         <a
-                                            onClick={e => deleteComment(e, comment._id)}
+                                            onClick={e => handleDelete(e, link._id)}
                                             className="btn btn-danger shadow btn-xs sharp"
                                         >
                                             <i className="fa fa-trash"></i>
@@ -89,10 +93,11 @@ const Comments = props => {
                         )
                     })}
                     </tbody>
-                </table>}
+                </table>
+            }
         </div>
-    )
-}
+    );
+};
 
 const mapStateToProps = (state) => {
         return {
@@ -101,4 +106,4 @@ const mapStateToProps = (state) => {
     }
 ;
 
-export default connect(mapStateToProps)(Comments);
+export default connect(mapStateToProps)(Links);

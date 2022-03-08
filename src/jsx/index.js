@@ -121,6 +121,11 @@ import EditCategory from "./components/Category/EditCategory";
 import Users from "./components/users/users";
 import Constants from "./components/constants/constants";
 import NotFound from "./pages/NotFound";
+import EditPost from "./components/posts/EditPost";
+import EditComment from "./components/Comments/EditComment";
+import Links from "./components/links/Links";
+import AddLink from "./components/links/AddLink";
+import EditLink from "./components/links/EditLink";
 
 const Markup = () => {
     const {menuToggle} = useContext(ThemeContext);
@@ -139,6 +144,7 @@ const Markup = () => {
         //  posts
         {url: "posts", component: Posts},
         {url: "new-post", component: NewPost},
+        {url: "edit-post/:id", component: EditPost},
 
         //  categories
         {url: "categories", component: Categories},
@@ -153,6 +159,12 @@ const Markup = () => {
 
         // comments
         {url: "comments", component: Comments},
+        {url: "edit-comment/:id", component: EditComment},
+
+        // comments
+        {url: "links", component: Links},
+        {url: "new-link", component: AddLink},
+        {url: "edit-link/:id", component: EditLink},
 
         //404
         {url: "*", component: NotFound}

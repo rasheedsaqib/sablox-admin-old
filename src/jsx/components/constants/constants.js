@@ -7,10 +7,22 @@ import {connect} from "react-redux";
 const Constants = props => {
 
     const [constants, setConstants] = useState(null);
+    const [posts, setPosts] = useState([]);
 
     useEffect(() => {
         getConstants();
+        getPosts();
     }, []);
+
+    const getPosts = () => {
+        axios.get('/posts')
+            .then(res => {
+                setPosts(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
 
     const getConstants = () => {
         axios.get('/constants')
@@ -42,9 +54,16 @@ const Constants = props => {
             });
     }
 
+    const changeHandler = (e, key) => {
+        const updateConstants = {...constants};
+        updateConstants[key] = e.target.value;
+        console.log(updateConstants[key]);
+        setConstants(updateConstants);
+    }
+
     return (
         <div className="col-xl-12 col-lg-12">
-            {constants ?
+            {constants && posts ?
                 <div className="card">
                     <div className="card-header">
                         <h4 className="card-title">Enter news</h4>
@@ -58,19 +77,29 @@ const Constants = props => {
                                     }
                                     return (
                                         <div className="form-group mb-3">
-                                            <label style={{textTransform: 'capitalize'}}>{key}:</label>
-                                            <input
-                                                type="text"
-                                                className="form-control input-default "
-                                                placeholder={key}
-                                                name={key}
-                                                value={constants[key]}
-                                                onChange={e => {
-                                                    const updateConstants = {...constants};
-                                                    updateConstants[key] = e.target.value;
-                                                    setConstants(updateConstants);
-                                                }}
-                                            />
+                                            {key === 'selectedPost' ?
+                                                <>
+                                                    <label style={{textTransform: 'capitalize'}}>{key}:</label>
+                                                    <select className="form-control" onChange={e=>changeHandler(e,key)}>
+                                                        {posts.map(post => {
+                                                            return (
+                                                                <option value={post._id} selected={post._id === constants[key]}>{post.title}</option>
+                                                            )
+                                                        })}
+                                                    </select>
+                                                </>
+                                                :
+                                                <>
+                                                    <label style={{textTransform: 'capitalize'}}>{key}:</label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control input-default "
+                                                        placeholder={key}
+                                                        name={key}
+                                                        value={constants[key]}
+                                                        onChange={e=>changeHandler(e,key)}
+                                                    />
+                                                </>}
                                         </div>
                                     )
                                 })}
