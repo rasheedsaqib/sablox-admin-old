@@ -24,7 +24,7 @@ export function loginAction(email, password, history) {
     return (dispatch) => {
         login(email, password)
             .then((response) => {
-                if(response.data.user.role === 'Admin'){
+                if(response.data.user.role === 'Admin' || response.data.user.role === 'SubAdmin') {
                     saveTokenInLocalStorage({
                         kind: "identitytoolkit#SignupNewUserResponse",
                         idToken: response.data.token,

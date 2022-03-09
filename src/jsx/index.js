@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect, useState} from "react";
 
 /// React router dom
 import {Switch, Route, Redirect} from "react-router-dom";
@@ -126,10 +126,14 @@ import EditComment from "./components/Comments/EditComment";
 import Links from "./components/links/Links";
 import AddLink from "./components/links/AddLink";
 import EditLink from "./components/links/EditLink";
+import Subscribers from "./components/subscribers/Subscribers";
+import AddUser from "./components/users/AddUser";
+import {userData} from "../store/selectors/AuthSelectors";
+import {connect} from "react-redux";
 
-const Markup = () => {
+const Markup = props => {
     const {menuToggle} = useContext(ThemeContext);
-    const routes = [
+    const adminRoutes = [
         /// Dashboard
         {url: "", component: () => <Redirect to="/dashboard" />},
         {url: "dashboard", component: Home},
@@ -153,6 +157,7 @@ const Markup = () => {
 
         //user
         {url: "users", component: Users},
+        {url: "add-users", component: AddUser},
 
         //constants
         {url: 'constants', component: Constants},
@@ -161,10 +166,14 @@ const Markup = () => {
         {url: "comments", component: Comments},
         {url: "edit-comment/:id", component: EditComment},
 
-        // comments
+        // links
         {url: "links", component: Links},
         {url: "new-link", component: AddLink},
         {url: "edit-link/:id", component: EditLink},
+
+        //subscribers
+
+        {url: "subscribers", component: Subscribers},
 
         //404
         {url: "*", component: NotFound}
@@ -260,9 +269,23 @@ const Markup = () => {
         // {url: "page-error-500", component: Error500},
         // {url: "page-error-503", component: Error503},
     ];
+    const subAdminRoutes = [
+        /// Dashboard
+        {url: "", component: () => <Redirect to="/dashboard" />},
+        {url: "dashboard", component: Home},
+
+        //  posts
+        {url: "posts", component: Posts},
+        {url: "new-post", component: NewPost},
+    ];
     let path = window.location.pathname;
     path = path.split("/");
     path = path[path.length - 1];
+
+    let [routes, setRoutes] = useState([]);
+    useEffect(() => {
+        setRoutes(props.userData.role === "Admin" ? adminRoutes : subAdminRoutes);
+    }, [props.userData]);
 
     let pagePath = path.split("-").includes("page");
     return (
@@ -298,4 +321,11 @@ const Markup = () => {
     );
 };
 
-export default Markup;
+const mapStateToProps = (state) => {
+        return {
+            userData: userData(state),
+        };
+    }
+;
+
+export default connect(mapStateToProps)(Markup);

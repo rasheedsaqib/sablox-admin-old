@@ -30,7 +30,7 @@ const Links = (props) => {
 
     const handleDelete = (e, id) => {
         e.preventDefault();
-        axios.delete(`/link/${id}`, {headers: { Authorization: props.token }})
+        axios.delete(`/link/${id}`, {headers: {Authorization: props.token}})
             .then(res => {
                 toast.success(res.data.message);
                 getLinks();
@@ -44,56 +44,74 @@ const Links = (props) => {
             })
     }
 
+    const handleCopy = (e, link) => {
+        e.preventDefault();
+        navigator.clipboard.writeText(link)
+            .then(() => {
+                toast.success("Link copied!")
+            })
+            .catch(err => {
+                toast.error(err);
+            })
+    }
+
     return (
         <div className='col-12'>
             {links.length === 0 ?
                 <p>No links found</p>
                 :
-                <table
-                    id="example"
-                    className="display w-100 dataTable"
-                    role="grid"
-                    aria-describedby="example_info"
-                >
-                    <thead>
-                    <th>Index</th>
-                    <th>Title</th>
-                    <th>Link</th>
-                    <th>Expiry</th>
-                    <th>Action</th>
-                    </thead>
-                    <tbody>
-                    {links.map((link, index) => {
-                        return (
-                            <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td>{link.title}</td>
-                                <td>{link.link}</td>
-                                <td>{link.expiresIn}</td>
-                                <td>
-                                    <div className="d-flex">
-                                        <a href={link.url} target="_blank" className="btn btn-primary shadow btn-xs sharp me-1">
-                                            <i className="fas fa-eye" />
-                                        </a>
-                                        <Link
-                                            to={`/edit-link/${link._id}`}
-                                            className="btn btn-primary shadow btn-xs sharp me-1"
-                                        >
-                                            <i className="fas fa-pen"></i>
-                                        </Link>
-                                        <a
-                                            onClick={e => handleDelete(e, link._id)}
-                                            className="btn btn-danger shadow btn-xs sharp"
-                                        >
-                                            <i className="fa fa-trash"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        )
-                    })}
-                    </tbody>
-                </table>
+                <div style={{overflowX: 'auto'}}>
+                    <table
+                        id="example"
+                        className="display w-100 dataTable"
+                        role="grid"
+                        aria-describedby="example_info"
+                    >
+                        <thead>
+                        <th>Index</th>
+                        <th>Title</th>
+                        <th>Link</th>
+                        <th>Expiry</th>
+                        <th>Action</th>
+                        </thead>
+                        <tbody>
+                        {links.map((link, index) => {
+                            return (
+                                <tr key={index}>
+                                    <td>{index + 1}</td>
+                                    <td>{link.title}</td>
+                                    <td>{link.link}</td>
+                                    <td>{link.expiresIn}</td>
+                                    <td>
+                                        <div className="d-flex">
+                                            <span onClick={e => handleCopy(e, link.url)} target="_blank"
+                                               className="btn btn-primary shadow btn-xs sharp me-1">
+                                                <i className="fas fa-copy"/>
+                                            </span>
+                                            <a href={link.url} target="_blank"
+                                               className="btn btn-primary shadow btn-xs sharp me-1">
+                                                <i className="fas fa-eye"/>
+                                            </a>
+                                            <Link
+                                                to={`/edit-link/${link._id}`}
+                                                className="btn btn-primary shadow btn-xs sharp me-1"
+                                            >
+                                                <i className="fas fa-pen"></i>
+                                            </Link>
+                                            <a
+                                                onClick={e => handleDelete(e, link._id)}
+                                                className="btn btn-danger shadow btn-xs sharp"
+                                            >
+                                                <i className="fa fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                        </tbody>
+                    </table>
+                </div>
             }
         </div>
     );

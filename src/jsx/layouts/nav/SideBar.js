@@ -7,6 +7,8 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import {Link} from "react-router-dom";
 import useScrollPosition from "use-scroll-position";
 import {ThemeContext} from "../../../context/ThemeContext";
+import {userData} from "../../../store/selectors/AuthSelectors";
+import {connect} from "react-redux";
 
 /// Image
 //import profile from "../../../images/profile/pic1.jpg";
@@ -32,7 +34,7 @@ class MM extends Component {
     }
 }
 
-const SideBar = () => {
+const SideBar = props => {
     const {
         iconHover,
         sidebarposition,
@@ -56,16 +58,7 @@ const SideBar = () => {
     path = path.split("/");
     path = path[path.length - 1];
     /// Active menu
-    let deshBoard = [
-            "",
-            "dashboard-dark",
-            "guest-list",
-            "guest-detail",
-            "concierge",
-            "room-list",
-            "reviews",
-            "task",
-        ],
+    let routes = [],
         app = [
             "app-profile",
             "post-details",
@@ -175,7 +168,8 @@ const SideBar = () => {
         >
             <PerfectScrollbar className="deznav-scroll">
                 <MM className="metismenu" id="menu">
-                    <li className={`${deshBoard.includes(path) ? "mm-active" : ""}`}>
+
+                    <li className={`${routes.includes(path) ? "mm-active" : ""}`}>
                         <Link className="has-arrow ai-icon" to="#">
                             <i className="flaticon-025-dashboard"></i>
                             <span className="nav-text">Dashboard</span>
@@ -183,49 +177,12 @@ const SideBar = () => {
                         <ul>
                             <li><Link className={`${path === "" ? "mm-active" : "dashboard"}`}
                                       to="/dashboard"> Dashboard</Link></li>
-                            {/*<li>*/}
-                            {/*    <Link className={`${path === "dashboard-dark" ? "mm-active" : ""}`}*/}
-                            {/*          to="/dashboard-dark">*/}
-                            {/*        Dashboard Dark*/}
-                            {/*    </Link>*/}
-                            {/*</li>*/}
-
-                            {/*<li><Link className={`${path === "guest-list" ? "mm-active" : ""}`}*/}
-                            {/*          to="/guest-list">Guest</Link></li>*/}
-                            {/*<li><Link className={`${path === "guest-detail" ? "mm-active" : ""}`} to="/guest-detail">Guest*/}
-                            {/*    Detail</Link></li>*/}
-                            {/*<li><Link className={`${path === "concierge" ? "mm-active" : ""}`}*/}
-                            {/*          to="/concierge">Concierge</Link></li>*/}
-                            {/*<li><Link className={`${path === "room-list" ? "mm-active" : ""}`}*/}
-                            {/*          to="/room-list">Room</Link></li>*/}
-                            {/*<li><Link className={`${path === "reviews" ? "mm-active" : ""}`}*/}
-                            {/*          to="/reviews">Reviews</Link></li>*/}
-                            {/*<li><Link className={`${path === "task" ? "mm-active" : ""}`} to="/task">Task</Link></li>*/}
                         </ul>
                     </li>
 
-                    <li className={`${deshBoard.includes(path) ? "mm-active" : ""}`}>
+                    <li className={`${routes.includes(path) ? "mm-active" : ""}`}>
                         <Link className="has-arrow ai-icon" to="#">
-                            <i className="flaticon-022-copy" />
-                            <span className="nav-text">Categories</span>
-                        </Link>
-                        <ul>
-                            <li>
-                                <Link className={`${path === "categories" ? "mm-active" : ""}`} to="/categories">
-                                    All Categories
-                                </Link>
-                            </li>
-                            <li>
-                                <Link className={`${path === "new-category" ? "mm-active" : ""}`} to="/new-category">
-                                    New Category
-                                </Link>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li className={`${deshBoard.includes(path) ? "mm-active" : ""}`}>
-                        <Link className="has-arrow ai-icon" to="#">
-                            <i className="flaticon-022-copy" />
+                            <i className="flaticon-022-copy"/>
                             <span className="nav-text">Posts</span>
                         </Link>
                         <ul>
@@ -242,67 +199,115 @@ const SideBar = () => {
                         </ul>
                     </li>
 
-                    <li className={`${deshBoard.includes(path) ? "mm-active" : ""}`}>
-                        <Link className="has-arrow ai-icon" to="#">
-                            <i className="flaticon-022-copy" />
-                            <span className="nav-text">Comments</span>
-                        </Link>
-                        <ul>
-                            <li>
-                                <Link className={`${path === "comments" ? "mm-active" : ""}`} to="/comments">
-                                    All Comments
-                                </Link>
-                            </li>
-                        </ul>
-                    </li>
+                    {props.userData.role === 'Admin' ?
+                        <>
 
-                    <li className={`${deshBoard.includes(path) ? "mm-active" : ""}`}>
-                        <Link className="has-arrow ai-icon" to="#">
-                            <i className="flaticon-022-copy" />
-                            <span className="nav-text">Users</span>
-                        </Link>
-                        <ul>
-                            <li>
-                                <Link className={`${path === "users" ? "mm-active" : ""}`} to="/users">
-                                    All Users
+                            <li className={`${routes.includes(path) ? "mm-active" : ""}`}>
+                                <Link className="has-arrow ai-icon" to="#">
+                                    <i className="flaticon-022-copy"/>
+                                    <span className="nav-text">Categories</span>
                                 </Link>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li className={`${deshBoard.includes(path) ? "mm-active" : ""}`}>
-                        <Link className="has-arrow ai-icon" to="#">
-                            <i className="flaticon-022-copy" />
-                            <span className="nav-text">Constants</span>
-                        </Link>
-                        <ul>
-                            <li>
-                                <Link className={`${path === "constants" ? "mm-active" : ""}`} to="/constants">
-                                    Update
-                                </Link>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li className={`${deshBoard.includes(path) ? "mm-active" : ""}`}>
-                        <Link className="has-arrow ai-icon" to="#">
-                            <i className="flaticon-022-copy" />
-                            <span className="nav-text">Links</span>
-                        </Link>
-                        <ul>
-                            <li>
-                                <Link className={`${path === "links" ? "mm-active" : ""}`} to="/links">
-                                    Links
-                                </Link>
+                                <ul>
+                                    <li>
+                                        <Link className={`${path === "categories" ? "mm-active" : ""}`}
+                                              to="/categories">
+                                            All Categories
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link className={`${path === "new-category" ? "mm-active" : ""}`}
+                                              to="/new-category">
+                                            New Category
+                                        </Link>
+                                    </li>
+                                </ul>
                             </li>
 
-                            <li>
-                                <Link className={`${path === "new-link" ? "mm-active" : ""}`} to="/new-link">
-                                    Add Link
+                            <li className={`${routes.includes(path) ? "mm-active" : ""}`}>
+                                <Link className="has-arrow ai-icon" to="#">
+                                    <i className="flaticon-022-copy"/>
+                                    <span className="nav-text">Comments</span>
                                 </Link>
+                                <ul>
+                                    <li>
+                                        <Link className={`${path === "comments" ? "mm-active" : ""}`} to="/comments">
+                                            All Comments
+                                        </Link>
+                                    </li>
+                                </ul>
                             </li>
-                        </ul>
-                    </li>
+
+                            <li className={`${routes.includes(path) ? "mm-active" : ""}`}>
+                                <Link className="has-arrow ai-icon" to="#">
+                                    <i className="flaticon-022-copy"/>
+                                    <span className="nav-text">Users</span>
+                                </Link>
+                                <ul>
+                                    <li>
+                                        <Link className={`${path === "users" ? "mm-active" : ""}`} to="/users">
+                                            All Users
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link className={`${path === "add-users" ? "mm-active" : ""}`} to="/add-users">
+                                            Add Users
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li className={`${routes.includes(path) ? "mm-active" : ""}`}>
+                                <Link className="has-arrow ai-icon" to="#">
+                                    <i className="flaticon-022-copy"/>
+                                    <span className="nav-text">Constants</span>
+                                </Link>
+                                <ul>
+                                    <li>
+                                        <Link className={`${path === "constants" ? "mm-active" : ""}`} to="/constants">
+                                            Update
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li className={`${routes.includes(path) ? "mm-active" : ""}`}>
+                                <Link className="has-arrow ai-icon" to="#">
+                                    <i className="flaticon-022-copy"/>
+                                    <span className="nav-text">Links</span>
+                                </Link>
+                                <ul>
+                                    <li>
+                                        <Link className={`${path === "links" ? "mm-active" : ""}`} to="/links">
+                                            Links
+                                        </Link>
+                                    </li>
+
+                                    <li>
+                                        <Link className={`${path === "new-link" ? "mm-active" : ""}`} to="/new-link">
+                                            Add Link
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li className={`${routes.includes(path) ? "mm-active" : ""}`}>
+                                <Link className="has-arrow ai-icon" to="#">
+                                    <i className="flaticon-022-copy"/>
+                                    <span className="nav-text">Subscribers</span>
+                                </Link>
+                                <ul>
+                                    <li>
+                                        <Link className={`${path === "subscribers" ? "mm-active" : ""}`}
+                                              to="/subscribers">
+                                            Subscribers
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </li>
+                        </>
+                        :
+                        null
+                    }
 
                     {/*<li className={`${app.includes(path) ? "mm-active" : ""}`}>*/}
                     {/*    <Link className="has-arrow ai-icon" to="#">*/}
@@ -691,4 +696,11 @@ const SideBar = () => {
     );
 };
 
-export default SideBar;
+const mapStateToProps = (state) => {
+        return {
+            userData: userData(state),
+        };
+    }
+;
+
+export default connect(mapStateToProps)(SideBar);

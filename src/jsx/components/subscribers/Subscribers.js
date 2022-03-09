@@ -1,17 +1,21 @@
 import React, {useEffect, useState} from "react";
 import axios from "../../../services/axios";
-import {token} from "../../../store/selectors/AuthSelectors";
 import {toast} from "react-toastify";
+import {token} from "../../../store/selectors/AuthSelectors";
 import {connect} from "react-redux";
 
-const Users = props => {
+const Subscribers = props => {
 
-    const [users, setUsers] = useState([]);
+    const [subscribers, setSubscribers] = useState([]);
 
     useEffect(() => {
-        axios.get('/users', {headers: {Authorization: props.token}})
+        getSubscribers();
+    }, []);
+
+    const getSubscribers = () => {
+        axios.get('/subscribers', {headers: { Authorization: props.token }})
             .then(res => {
-                setUsers(res.data);
+                setSubscribers(res.data);
             })
             .catch(err => {
                 if (err.response) {
@@ -20,14 +24,14 @@ const Users = props => {
                     toast.error(err.message);
                 }
             });
-    }, [props.token]);
+    };
 
-    const handleDelete = (e, id) => {
+    const handleDelete = (e, email) => {
         e.preventDefault();
-        axios.delete('/user/' + id, {headers: {Authorization: props.token}})
+        axios.delete(`/subscriber/${email}`, {headers: { Authorization: props.token }})
             .then(res => {
                 toast.success(res.data.message);
-                setUsers(users.filter(user => user._id !== id));
+                getSubscribers();
             })
             .catch(err => {
                 if (err.response) {
@@ -36,12 +40,12 @@ const Users = props => {
                     toast.error(err.message);
                 }
             });
-    }
+    };
 
     return (
         <div className='col-12'>
-            {users.length === 0 ?
-                <p>No users found!</p>
+            {subscribers.length === 0 ?
+                <p>No subscribers found</p>
                 :
                 <div style={{overflowX: 'auto'}}>
                     <table
@@ -52,31 +56,27 @@ const Users = props => {
                     >
                         <thead>
                         <th>Index</th>
-                        <th>Name</th>
+                        <th>Id</th>
                         <th>Email</th>
-                        <th>Phone</th>
-                        <th>Role</th>
                         <th>Action</th>
                         </thead>
                         <tbody>
-                        {users.map((user, index) => {
+                        {subscribers.map((subscriber, index) => {
                             return (
-                                <tr key={user._id}>
-                                    <td>{index + 1}</td>
-                                    <td>{`${user.firstName} ${user.lastName}`}</td>
-                                    <td>{user.email}</td>
-                                    <td>{user.phone || 'No Phone number'}</td>
-                                    <td>{user.role}</td>
+                                <tr key={subscriber.id}>
+                                    <td>{index+1}</td>
+                                    <td>{subscriber._id}</td>
+                                    <td>{subscriber.email}</td>
                                     <td>
-                                        <a
-                                            onClick={e => handleDelete(e, user._id)}
+                                        <button
+                                            onClick={e => handleDelete(e, subscriber.email)}
                                             className="btn btn-danger shadow btn-xs sharp"
                                         >
                                             <i className="fa fa-trash"></i>
-                                        </a>
+                                        </button>
                                     </td>
                                 </tr>
-                            )
+                            );
                         })}
                         </tbody>
                     </table>
@@ -93,4 +93,4 @@ const mapStateToProps = (state) => {
     }
 ;
 
-export default connect(mapStateToProps)(Users);
+export default connect(mapStateToProps)(Subscribers);
