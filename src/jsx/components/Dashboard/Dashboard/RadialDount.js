@@ -5,7 +5,6 @@ class RadialDount extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			series: [70],
 			options: {
 				chart: {
 					type: 'radialBar',
@@ -14,7 +13,7 @@ class RadialDount extends React.Component {
 						enabled: true
 					}
 				},
-				
+
 				colors:['var(--primary)'],
 				plotOptions: {
 					radialBar: {
@@ -27,16 +26,17 @@ class RadialDount extends React.Component {
 					},
 				},
 				labels: [''],
-			
+
 			},
 		};
 	}
+
 	render() {
 		return (
 			<div id="chart" >
 				<ReactApexChart
 				  options={this.state.options}
-				  series={this.state.series}
+				  series={[this.props.series]}
 				  type="radialBar"
 				  height={150}
 				/>

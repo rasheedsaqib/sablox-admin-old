@@ -130,12 +130,13 @@ import Subscribers from "./components/subscribers/Subscribers";
 import AddUser from "./components/users/AddUser";
 import {userData} from "../store/selectors/AuthSelectors";
 import {connect} from "react-redux";
+import Ads from "./components/ads/Ads";
 
 const Markup = props => {
     const {menuToggle} = useContext(ThemeContext);
     const adminRoutes = [
         /// Dashboard
-        {url: "", component: () => <Redirect to="/dashboard" />},
+        {url: "", component: () => <Redirect to="/dashboard"/>},
         {url: "dashboard", component: Home},
         // {url: "dashboard-dark", component: DashboardDark},
         // {url: "guest-list", component: GuestList},
@@ -172,8 +173,10 @@ const Markup = props => {
         {url: "edit-link/:id", component: EditLink},
 
         //subscribers
-
         {url: "subscribers", component: Subscribers},
+
+        //ads
+        {url: "ads", component: Ads},
 
         //404
         {url: "*", component: NotFound}
@@ -271,18 +274,24 @@ const Markup = props => {
     ];
     const subAdminRoutes = [
         /// Dashboard
-        {url: "", component: () => <Redirect to="/dashboard" />},
+        {url: "", component: () => <Redirect to="/dashboard"/>},
         {url: "dashboard", component: Home},
 
         //  posts
         {url: "posts", component: Posts},
         {url: "new-post", component: NewPost},
+
+        //404
+        {url: "*", component: NotFound}
     ];
     let path = window.location.pathname;
     path = path.split("/");
     path = path[path.length - 1];
 
-    let [routes, setRoutes] = useState([]);
+    let [routes, setRoutes] = useState([
+        //404
+        {url: "*", component: NotFound}
+    ]);
     useEffect(() => {
         setRoutes(props.userData.role === "Admin" ? adminRoutes : subAdminRoutes);
     }, [props.userData]);

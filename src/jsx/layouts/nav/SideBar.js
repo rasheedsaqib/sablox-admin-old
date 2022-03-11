@@ -58,101 +58,15 @@ const SideBar = props => {
     path = path.split("/");
     path = path[path.length - 1];
     /// Active menu
-    let routes = [],
-        app = [
-            "app-profile",
-            "post-details",
-            "app-calender",
-            "email-compose",
-            "email-inbox",
-            "email-read",
-            "ecom-product-grid",
-            "ecom-product-list",
-            "ecom-product-order",
-            "ecom-checkout",
-            "ecom-invoice",
-            "ecom-customers",
-            "post-details",
-            "ecom-product-detail",
-        ],
-        email = ["email-compose", "email-inbox", "email-read"],
-        shop = [
-            "ecom-product-grid",
-            "ecom-product-list",
-            "ecom-product-list",
-            "ecom-product-order",
-            "ecom-checkout",
-            "ecom-invoice",
-            "ecom-customers",
-            "ecom-product-detail",
-        ],
-        charts = [
-            "chart-rechart",
-            "chart-flot",
-            "chart-chartjs",
-            "chart-chartist",
-            "chart-sparkline",
-            "chart-apexchart",
-        ],
-        bootstrap = [
-            "ui-accordion",
-            "ui-badge",
-            "ui-alert",
-            "ui-button",
-            "ui-modal",
-            "ui-button-group",
-            "ui-list-group",
-            "ui-media-object",
-            "ui-card",
-            "ui-carousel",
-            "ui-dropdown",
-            "ui-popover",
-            "ui-progressbar",
-            "ui-tab",
-            "ui-typography",
-            "ui-pagination",
-            "ui-grid",
-        ],
-        plugins = [
-            "uc-select2",
-            "uc-nestable",
-            "uc-sweetalert",
-            "uc-toastr",
-            "uc-noui-slider",
-            "map-jqvmap",
-            "uc-lightgallery",
-        ],
-        redux = [
-            "redux-form",
-            "redux-wizard",
-            "todo",
-        ],
-        widget = ["widget-basic"],
-        forms = [
-            "form-element",
-            "form-wizard",
-            "form-editor-summernote",
-            "form-pickers",
-            "form-validation-jquery",
-        ],
-        table = ["table-bootstrap-basic", "table-datatable-basic"],
-        pages = [
-            "page-register",
-            "page-login",
-            "page-lock-screen",
-            "page-error-400",
-            "page-error-403",
-            "page-error-404",
-            "page-error-500",
-            "page-error-503",
-        ],
-        error = [
-            "page-error-400",
-            "page-error-403",
-            "page-error-404",
-            "page-error-500",
-            "page-error-503",
-        ];
+    let dashboard = ['dashboard', ''],
+        posts = ['posts', 'new-post'],
+        categories = ['categories', 'new-category'],
+        users = ['users', 'add-user'],
+        links = ['links', 'new-link'],
+        comments = ['comments'],
+        constants = ['constants'],
+        subscribers = ['subscribers'],
+        ads = ['ads'];
 
     return (
         <div
@@ -169,7 +83,7 @@ const SideBar = props => {
             <PerfectScrollbar className="deznav-scroll">
                 <MM className="metismenu" id="menu">
 
-                    <li className={`${routes.includes(path) ? "mm-active" : ""}`}>
+                    <li className={`${dashboard.includes(path) ? "mm-active" : ""}`}>
                         <Link className="has-arrow ai-icon" to="#">
                             <i className="flaticon-025-dashboard"></i>
                             <span className="nav-text">Dashboard</span>
@@ -180,7 +94,7 @@ const SideBar = props => {
                         </ul>
                     </li>
 
-                    <li className={`${routes.includes(path) ? "mm-active" : ""}`}>
+                    <li className={`${posts.includes(path) ? "mm-active" : ""}`}>
                         <Link className="has-arrow ai-icon" to="#">
                             <i className="flaticon-022-copy"/>
                             <span className="nav-text">Posts</span>
@@ -202,7 +116,7 @@ const SideBar = props => {
                     {props.userData.role === 'Admin' ?
                         <>
 
-                            <li className={`${routes.includes(path) ? "mm-active" : ""}`}>
+                            <li className={`${categories.includes(path) ? "mm-active" : ""}`}>
                                 <Link className="has-arrow ai-icon" to="#">
                                     <i className="flaticon-022-copy"/>
                                     <span className="nav-text">Categories</span>
@@ -223,7 +137,7 @@ const SideBar = props => {
                                 </ul>
                             </li>
 
-                            <li className={`${routes.includes(path) ? "mm-active" : ""}`}>
+                            <li className={`${comments.includes(path) ? "mm-active" : ""}`}>
                                 <Link className="has-arrow ai-icon" to="#">
                                     <i className="flaticon-022-copy"/>
                                     <span className="nav-text">Comments</span>
@@ -237,7 +151,7 @@ const SideBar = props => {
                                 </ul>
                             </li>
 
-                            <li className={`${routes.includes(path) ? "mm-active" : ""}`}>
+                            <li className={`${users.includes(path) ? "mm-active" : ""}`}>
                                 <Link className="has-arrow ai-icon" to="#">
                                     <i className="flaticon-022-copy"/>
                                     <span className="nav-text">Users</span>
@@ -256,7 +170,7 @@ const SideBar = props => {
                                 </ul>
                             </li>
 
-                            <li className={`${routes.includes(path) ? "mm-active" : ""}`}>
+                            <li className={`${constants.includes(path) ? "mm-active" : ""}`}>
                                 <Link className="has-arrow ai-icon" to="#">
                                     <i className="flaticon-022-copy"/>
                                     <span className="nav-text">Constants</span>
@@ -270,7 +184,7 @@ const SideBar = props => {
                                 </ul>
                             </li>
 
-                            <li className={`${routes.includes(path) ? "mm-active" : ""}`}>
+                            <li className={`${links.includes(path) ? "mm-active" : ""}`}>
                                 <Link className="has-arrow ai-icon" to="#">
                                     <i className="flaticon-022-copy"/>
                                     <span className="nav-text">Links</span>
@@ -290,7 +204,7 @@ const SideBar = props => {
                                 </ul>
                             </li>
 
-                            <li className={`${routes.includes(path) ? "mm-active" : ""}`}>
+                            <li className={`${subscribers.includes(path) ? "mm-active" : ""}`}>
                                 <Link className="has-arrow ai-icon" to="#">
                                     <i className="flaticon-022-copy"/>
                                     <span className="nav-text">Subscribers</span>
@@ -300,6 +214,21 @@ const SideBar = props => {
                                         <Link className={`${path === "subscribers" ? "mm-active" : ""}`}
                                               to="/subscribers">
                                             Subscribers
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li className={`${ads.includes(path) ? "mm-active" : ""}`}>
+                                <Link className="has-arrow ai-icon" to="#">
+                                    <i className="flaticon-022-copy"/>
+                                    <span className="nav-text">Ads</span>
+                                </Link>
+                                <ul>
+                                    <li>
+                                        <Link className={`${path === "ads" ? "mm-active" : ""}`}
+                                              to="/ads">
+                                            Ads
                                         </Link>
                                     </li>
                                 </ul>
