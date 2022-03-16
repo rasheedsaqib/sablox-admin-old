@@ -131,6 +131,7 @@ import AddUser from "./components/users/AddUser";
 import {userData} from "../store/selectors/AuthSelectors";
 import {connect} from "react-redux";
 import Ads from "./components/ads/Ads";
+import NewAd from "./components/ads/NewAd";
 
 const Markup = props => {
     const {menuToggle} = useContext(ThemeContext);
@@ -177,6 +178,7 @@ const Markup = props => {
 
         //ads
         {url: "ads", component: Ads},
+        {url: "new-ad", component: NewAd},
 
         //404
         {url: "*", component: NotFound}

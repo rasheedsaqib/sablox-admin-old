@@ -66,7 +66,7 @@ const SideBar = props => {
         comments = ['comments'],
         constants = ['constants'],
         subscribers = ['subscribers'],
-        ads = ['ads'];
+        ads = ['ads', 'new-ad'];
 
     return (
         <div
@@ -229,6 +229,12 @@ const SideBar = props => {
                                         <Link className={`${path === "ads" ? "mm-active" : ""}`}
                                               to="/ads">
                                             Ads
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link className={`${path === "new-ad" ? "mm-active" : ""}`}
+                                              to="/new-ad">
+                                            New Ad
                                         </Link>
                                     </li>
                                 </ul>
