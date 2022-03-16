@@ -20,9 +20,6 @@ class MM extends Component {
         this.mm = new Metismenu(this.$el);
     }
 
-    componentWillUnmount() {
-    }
-
     render() {
         return (
             <div className="mm-wrapper">
