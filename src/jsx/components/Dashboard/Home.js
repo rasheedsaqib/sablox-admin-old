@@ -1,13 +1,5 @@
-import React, {useState, useContext, useEffect} from 'react';
-import loadable from "@loadable/component";
-import pMinDelay from "p-min-delay";
+import React, {useState, useEffect} from 'react';
 import "react-calendar/dist/Calendar.css";
-
-///Images
-import pic1 from './../../../images/avatar/1.jpg';
-import pic2 from './../../../images/avatar/2.jpg';
-import pic3 from './../../../images/avatar/3.jpg';
-import pic4 from './../../../images/avatar/4.jpg';
 
 
 //Import
@@ -17,7 +9,7 @@ import axios from "../../../services/axios";
 import {toast} from "react-toastify";
 import {token} from "../../../store/selectors/AuthSelectors";
 import {connect} from "react-redux";
-import {getDailyData, getWeeklyData, getMonthlyData, getYearlyData, getMonthlyArray} from "../../../services/util";
+import {getDailyData, getWeeklyData, getMonthlyData, getYearlyData} from "../../../services/util";
 
 
 const Home = props => {

@@ -3,7 +3,6 @@ import axios from "../../../services/axios";
 import {token} from "../../../store/selectors/AuthSelectors";
 import {connect} from "react-redux";
 import {toast} from "react-toastify";
-import {Link} from "@material-ui/core";
 
 const Comments = props => {
 
@@ -79,6 +78,7 @@ const Comments = props => {
                                                 <i className="fas fa-pen"></i>
                                             </a>
                                             <a
+                                                href='/'
                                                 onClick={e => deleteComment(e, comment._id)}
                                                 className="btn btn-danger shadow btn-xs sharp"
                                             >

@@ -20,7 +20,7 @@ const EditLink = props => {
                     toast.error(err.message);
                 }
             });
-    }, [])
+    }, [props.match.params.id]);
 
     const onChange = e => {
         setLink({...link, [e.target.name]: e.target.value});

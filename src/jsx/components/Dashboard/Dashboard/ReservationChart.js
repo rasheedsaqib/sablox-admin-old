@@ -2,10 +2,9 @@ import React, {useEffect, useState} from "react";
 import ReactApexChart from "react-apexcharts";
 import {toast} from "react-toastify";
 import axios from "../../../../services/axios";
-import {getDailyData, getMonthlyArray, getMonthlyData, getWeeklyData, getYearlyData} from "../../../../services/util";
+import {getMonthlyArray} from "../../../../services/util";
 import {token} from "../../../../store/selectors/AuthSelectors";
 import {connect} from "react-redux";
-const fs = require('fs')
 
 const ReservationChart = props => {
 
@@ -83,8 +82,11 @@ const ReservationChart = props => {
 		},
 	});
 
-	useEffect(async () => {
-		await getData();
+	useEffect(() => {
+		const fetch = async () => {
+			await getData();
+		}
+		fetch();
 	}, []);
 
 	const getData = async () => {

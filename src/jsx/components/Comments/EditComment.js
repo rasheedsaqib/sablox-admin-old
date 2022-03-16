@@ -20,7 +20,7 @@ const EditComment = props => {
                     toast.error(err.message);
                 }
             })
-    }, []);
+    }, [props.match.params.id]);
 
     const handleSubmit = e => {
         e.preventDefault();

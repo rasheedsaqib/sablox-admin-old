@@ -88,7 +88,7 @@ const Links = (props) => {
                                                className="btn btn-primary shadow btn-xs sharp me-1">
                                                 <i className="fas fa-copy"/>
                                             </span>
-                                            <a href={link.url} target="_blank"
+                                            <a href={link.url} target="_blank" rel='noreferrer'
                                                className="btn btn-primary shadow btn-xs sharp me-1">
                                                 <i className="fas fa-eye"/>
                                             </a>
@@ -99,6 +99,7 @@ const Links = (props) => {
                                                 <i className="fas fa-pen"></i>
                                             </Link>
                                             <a
+                                                href='/'
                                                 onClick={e => handleDelete(e, link._id)}
                                                 className="btn btn-danger shadow btn-xs sharp"
                                             >

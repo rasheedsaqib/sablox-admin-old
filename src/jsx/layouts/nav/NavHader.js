@@ -2,13 +2,12 @@ import React, { Fragment, useContext, useState } from "react";
 /// React router dom
 import { Link } from "react-router-dom";
 import { ThemeContext } from "../../../context/ThemeContext";
-import logo from "../../../images/logo.png";
 import logo_full from "../../../images/logo-full.png";
 
 
 const NavHader = () => {
   const [toggle, setToggle] = useState(false);
-  const { navigationHader, openMenuToggle, background } = useContext(
+  const { openMenuToggle } = useContext(
     ThemeContext
   );
   return (

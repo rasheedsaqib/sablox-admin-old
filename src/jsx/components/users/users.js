@@ -69,6 +69,7 @@ const Users = props => {
                                     <td>{user.role}</td>
                                     <td>
                                         <a
+                                            href='/'
                                             onClick={e => handleDelete(e, user._id)}
                                             className="btn btn-danger shadow btn-xs sharp"
                                         >

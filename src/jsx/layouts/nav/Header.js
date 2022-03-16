@@ -1,20 +1,12 @@
 import React from "react";
-
 import {Link, withRouter} from "react-router-dom";
-/// Scroll
-import PerfectScrollbar from "react-perfect-scrollbar";
-
 import {userData} from '../../../store/selectors/AuthSelectors';
-
-/// Image
 import profile from "../../../images/avatar/pic1.jpg";
-import avatar from "../../../images/avatar/1.jpg";
 import {Dropdown} from "react-bootstrap";
 import LogoutPage from './Logout';
 import {connect} from "react-redux";
 
 const Header = props => {
-    const onNote = props.onNote;
     var path = window.location.pathname.split("/");
     var name = path[path.length - 1].split("-");
     var filterName = name.length >= 3 ? name.filter((n, i) => i > 0) : name;

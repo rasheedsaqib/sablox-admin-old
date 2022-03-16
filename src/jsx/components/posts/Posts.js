@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Dropdown, Table} from "react-bootstrap";
+import {Dropdown} from "react-bootstrap";
 import {toast} from 'react-toastify';
 import axios from "../../../services/axios";
 import {Link} from "react-router-dom";

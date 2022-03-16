@@ -75,6 +75,7 @@ const Categories = props => {
                                                 <i className="fas fa-pen"></i>
                                             </Link>
                                             <a
+                                                href='/'
                                                 onClick={e => deleteCategory(e, category._id)}
                                                 className="btn btn-danger shadow btn-xs sharp"
                                             >
