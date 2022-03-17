@@ -45,17 +45,17 @@ export function saveTokenInLocalStorage(tokenDetails) {
     localStorage.setItem('userDetails', JSON.stringify(tokenDetails));
 }
 
-export function runLogoutTimer(dispatch, timer, history) {
+export function runLogoutTimer(dispatch, timer, navigate) {
     setTimeout(() => {
-        dispatch(logout(history));
+        dispatch(logout(navigate));
     }, timer);
 }
 
-export function checkAutoLogin(dispatch, history) {
+export function checkAutoLogin(dispatch, navigate) {
     const tokenDetailsString = localStorage.getItem('userDetails');
     let tokenDetails = '';
     if (!tokenDetailsString) {
-        dispatch(logout(history));
+        dispatch(logout(navigate));
         return;
     }
 
@@ -64,11 +64,11 @@ export function checkAutoLogin(dispatch, history) {
     let todaysDate = new Date();
 
     if (todaysDate > expireDate) {
-        dispatch(logout(history));
+        dispatch(logout(navigate));
         return;
     }
     dispatch(loginConfirmedAction(tokenDetails));
 
     const timer = expireDate.getTime() - todaysDate.getTime();
-    runLogoutTimer(dispatch, timer, history);
+    runLogoutTimer(dispatch, timer, navigate);
 }

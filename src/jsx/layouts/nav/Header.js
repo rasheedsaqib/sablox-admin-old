@@ -1,5 +1,5 @@
 import React from "react";
-import {Link, withRouter} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {userData} from '../../../store/selectors/AuthSelectors';
 import profile from "../../../images/avatar/pic1.jpg";
 import {Dropdown} from "react-bootstrap";
@@ -306,4 +306,4 @@ const mapStateToProps = (state) => {
     }
 ;
 
-export default connect(mapStateToProps)(withRouter(Header));
+export default connect(mapStateToProps)(Header);

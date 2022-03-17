@@ -12,15 +12,15 @@ export const LOGIN_FAILED_ACTION = '[login action] failed login';
 export const LOADING_TOGGLE_ACTION = '[Loading action] toggle loading';
 export const LOGOUT_ACTION = '[Logout action] logout action';
 
-export function logout(history) {
+export function logout(navigate) {
     localStorage.removeItem('userDetails');
-    history.push('/login');
+    navigate('/login');
     return {
         type: LOGOUT_ACTION,
     };
 }
 
-export function loginAction(email, password, history) {
+export function loginAction(email, password, navigate) {
     return (dispatch) => {
         login(email, password)
             .then((response) => {
@@ -37,7 +37,7 @@ export function loginAction(email, password, history) {
                     runLogoutTimer(
                         dispatch,
                         response.data.expiresIn * 1000,
-                        history,
+                        navigate,
                     );
                     dispatch(loginConfirmedAction(response.data));
                     window.location.href = '/dashboard';
@@ -66,20 +66,6 @@ export function loginConfirmedAction(data) {
     return {
         type: LOGIN_CONFIRMED_ACTION,
         payload: data,
-    };
-}
-
-export function confirmedSignupAction(payload) {
-    return {
-        type: SIGNUP_CONFIRMED_ACTION,
-        payload,
-    };
-}
-
-export function signupFailedAction(message) {
-    return {
-        type: SIGNUP_FAILED_ACTION,
-        payload: message,
     };
 }
 

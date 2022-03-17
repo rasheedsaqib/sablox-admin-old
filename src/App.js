@@ -3,7 +3,7 @@ import {lazy, Suspense, useEffect} from 'react';
 /// Components
 import Index from "./jsx";
 import {connect, useDispatch} from 'react-redux';
-import {Route, Switch, withRouter} from 'react-router-dom';
+import {Route, Routes, useNavigate} from 'react-router-dom';
 // action
 import {checkAutoLogin} from './services/AuthService';
 import {isAuthenticated} from './store/selectors/AuthSelectors';
@@ -20,15 +20,16 @@ const Login = lazy(() => {
 
 function App(props) {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
-        checkAutoLogin(dispatch, props.history);
-    }, [dispatch, props.history]);
+        checkAutoLogin(dispatch, navigate);
+    }, [dispatch, navigate]);
 
     let routes = (
-        <Switch>
-            <Route path='/login' component={Login}/>
-        </Switch>
+        <Routes>
+            <Route path='/login' element={<Login />}/>
+        </Routes>
     );
     if (props.isAuthenticated) {
         return (
@@ -36,9 +37,9 @@ function App(props) {
                 <Suspense fallback={
                     <div id="preloader">
                         <div className="sk-three-bounce">
-                            <div className="sk-child sk-bounce1"></div>
-                            <div className="sk-child sk-bounce2"></div>
-                            <div className="sk-child sk-bounce3"></div>
+                            <div className="sk-child sk-bounce1" />
+                            <div className="sk-child sk-bounce2" />
+                            <div className="sk-child sk-bounce3" />
                         </div>
                     </div>
                 }
@@ -54,9 +55,9 @@ function App(props) {
                 <Suspense fallback={
                     <div id="preloader">
                         <div className="sk-three-bounce">
-                            <div className="sk-child sk-bounce1"></div>
-                            <div className="sk-child sk-bounce2"></div>
-                            <div className="sk-child sk-bounce3"></div>
+                            <div className="sk-child sk-bounce1" />
+                            <div className="sk-child sk-bounce2" />
+                            <div className="sk-child sk-bounce3" />
                         </div>
                     </div>
                 }
@@ -75,5 +76,5 @@ const mapStateToProps = (state) => {
     }
 ;
 
-export default withRouter(connect(mapStateToProps)(App));
+export default connect(mapStateToProps)(App);
 

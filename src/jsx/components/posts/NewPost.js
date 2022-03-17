@@ -3,6 +3,7 @@ import axios from "../../../services/axios";
 import {toast} from "react-toastify";
 import {token} from "../../../store/selectors/AuthSelectors";
 import {connect} from "react-redux";
+import PostDescription from "./PostDescription";
 
 const NewPost = props => {
 
@@ -97,7 +98,8 @@ const NewPost = props => {
 
                                 <div className="form-group mb-3">
                                     <label>Description:</label>
-                                    <textarea placeholder='Description' className="form-control" name="description" style={{resize: 'vertical', height: '200px', paddingTop: '1rem'}} />
+                                    <PostDescription />
+                                    {/*<textarea placeholder='Description' className="form-control" name="description" style={{resize: 'vertical', height: '200px', paddingTop: '1rem'}} />*/}
                                 </div>
 
                                 <div className="form-group mb-3">

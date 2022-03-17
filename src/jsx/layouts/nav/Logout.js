@@ -1,16 +1,16 @@
 import React  from 'react';
 import {connect, useDispatch } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 import { logout } from '../../../store/actions/AuthActions';
 import { isAuthenticated } from '../../../store/selectors/AuthSelectors';
 
 function LogoutPage(props){
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     function onLogout() {
-       dispatch(logout(props.history));
-       // window.location.reload();
+       dispatch(logout(navigate));
     }
     return(
         <>
@@ -35,4 +35,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default withRouter(connect(mapStateToProps)(LogoutPage));
+export default connect(mapStateToProps)(LogoutPage);
