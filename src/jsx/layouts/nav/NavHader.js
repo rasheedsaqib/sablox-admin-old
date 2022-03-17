@@ -14,7 +14,6 @@ const NavHader = () => {
     <div className="nav-header">
       <Link to="/dashboard" className="brand-logo">
           <Fragment>
-              {/*<img style={{height: '40px', marginRight: '10px'}} src={logo} alt='SaBloX' />*/}
               <img style={{height: '60px'}} src={logo_full} alt='SaBloX' />
           </Fragment>
       </Link>

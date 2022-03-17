@@ -3,10 +3,12 @@ import axios from "../../../services/axios";
 import {toast} from "react-toastify";
 import {token} from "../../../store/selectors/AuthSelectors";
 import {connect} from "react-redux";
+import {useNavigate} from "react-router-dom";
 
 const AddUser = props => {
 
     const [roles] = useState(['User', 'SubAdmin', 'Admin']);
+    const navigate = useNavigate();
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -19,7 +21,7 @@ const AddUser = props => {
         axios.post('/user', json, {headers: { Authorization: props.token }})
             .then(res => {
                 toast.success('User added successfully');
-                props.history.push('/users');
+                navigate('/users');
             })
             .catch(err => {
                 if(err.response){

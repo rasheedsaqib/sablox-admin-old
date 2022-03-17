@@ -3,8 +3,11 @@ import {toast} from "react-toastify";
 import axios from "../../../services/axios";
 import {token} from "../../../store/selectors/AuthSelectors";
 import {connect} from "react-redux";
+import {useNavigate} from "react-router-dom";
 
 const NewCategory = props => {
+
+    const navigate = useNavigate();
 
     const handleNewCategory = e => {
         e.preventDefault();
@@ -14,7 +17,7 @@ const NewCategory = props => {
             axios.post('/category', {name: e.target.elements.name.value}, {headers: { Authorization: props.token }})
                 .then(res => {
                     toast.success(res.data.message);
-                    props.history.push('/categories');
+                    navigate('/categories');
                 })
                 .catch(err => {
                     if(err.response){

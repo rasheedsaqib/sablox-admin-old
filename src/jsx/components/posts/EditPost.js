@@ -3,10 +3,12 @@ import axios from "../../../services/axios";
 import {toast} from "react-toastify";
 import {token} from "../../../store/selectors/AuthSelectors";
 import {connect} from "react-redux";
+import {useNavigate} from "react-router-dom";
 
 const EditPost = props => {
     const [categories, setCategories] = useState([]);
     const [post, setPost] = useState({});
+    const navigate = useNavigate();
 
     useEffect(() => {
         getCategories();
@@ -42,7 +44,7 @@ const EditPost = props => {
         axios.put(`/post/${props.match.params.id}`, post, {headers: { Authorization: props.token }})
             .then(res => {
                 toast.success(res.data.message);
-                props.history.push('/posts');
+                navigate('/posts');
             })
             .catch(err => {
                 if (err.response) {

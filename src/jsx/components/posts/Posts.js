@@ -2,13 +2,14 @@ import React, {useEffect, useState} from "react";
 import {Dropdown} from "react-bootstrap";
 import {toast} from 'react-toastify';
 import axios from "../../../services/axios";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {token, userData} from '../../../store/selectors/AuthSelectors';
 import {connect} from "react-redux";
 
 const Posts = props => {
 
     const [posts, setPosts] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         getPosts();
@@ -25,7 +26,7 @@ const Posts = props => {
     }
 
     const handleEdit = (id) => {
-        props.history.push(`/edit-post/${id}`);
+        navigate(`/edit-post/${id}`);
     }
 
     const handleDelete = (id) => {

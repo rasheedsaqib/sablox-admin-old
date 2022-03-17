@@ -9,7 +9,7 @@ const ThemeContextProvider = (props) => {
     const [windowHeight, setWindowHeight] = useState(0);
     const [iconHover, setIconHover] = useState(false);
     const [sideBarStyle, setSideBarStyle] = useState({value: "full", label: "Full",});
-    const [sidebarposition, setSidebarposition] = useState({value: "fixed", label: "Fixed",});
+    const [sidebarposition] = useState({value: "fixed", label: "Fixed",});
     const [headerposition, setHeaderposition] = useState({value: "fixed", label: "Fixed",});
     const [sidebarLayout, setSidebarLayout] = useState({value: "vertical", label: "Vertical",});
     const [menuToggle, setMenuToggle] = useState(false);

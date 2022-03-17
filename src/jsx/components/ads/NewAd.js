@@ -3,8 +3,10 @@ import axios from "../../../services/axios";
 import {token} from "../../../store/selectors/AuthSelectors";
 import {connect} from "react-redux";
 import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 const NewAd = props => {
+    const navigate = useNavigate();
 
     const handleNewAd = (e) => {
         e.preventDefault();
@@ -14,7 +16,7 @@ const NewAd = props => {
         }, {headers: {Authorization: props.token}})
             .then(res => {
                 toast.success(res.data.message);
-                props.history.push('/ads');
+                navigate('/ads');
             })
             .catch(err => {
                 if (err.response) {

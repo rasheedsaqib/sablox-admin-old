@@ -3,10 +3,12 @@ import {toast} from "react-toastify";
 import axios from "../../../services/axios";
 import {token} from "../../../store/selectors/AuthSelectors";
 import {connect} from "react-redux";
+import {useNavigate} from "react-router-dom";
 
 const EditCategory = props => {
 
     const [category, setCategory] = useState({});
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get('/category/' + props.match.params.id)
@@ -27,7 +29,7 @@ const EditCategory = props => {
         axios.put(`/category/${props.match.params.id}`, category, {headers: { Authorization: props.token }})
             .then(res => {
                 toast.success(res.data.message);
-                props.history.push('/categories');
+                navigate('/categories');
             })
             .catch(err => {
                 if (err.response) {

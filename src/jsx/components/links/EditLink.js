@@ -3,10 +3,12 @@ import axios from "../../../services/axios";
 import {toast} from "react-toastify";
 import {token} from "../../../store/selectors/AuthSelectors";
 import {connect} from "react-redux";
+import {useNavigate} from "react-router-dom";
 
 const EditLink = props => {
 
     const [link, setLink] = useState(props.link);
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get(`/link/${props.match.params.id}`)
@@ -32,7 +34,7 @@ const EditLink = props => {
         axios.put(`/link/${props.match.params.id}`, link, {headers: { Authorization: props.token }})
             .then(res => {
                 toast.success(res.data.message);
-                props.history.push('/links');
+                navigate('/links');
             })
             .catch(err => {
                 if(err.response){

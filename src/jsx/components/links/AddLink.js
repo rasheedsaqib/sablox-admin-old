@@ -3,8 +3,11 @@ import axios from "../../../services/axios";
 import {toast} from "react-toastify";
 import {token} from "../../../store/selectors/AuthSelectors";
 import {connect} from "react-redux";
+import {useNavigate} from "react-router-dom";
 
 const AddLink = props => {
+
+    const navigate = useNavigate();
 
     const handleNewLink = e => {
         e.preventDefault();
@@ -17,7 +20,7 @@ const AddLink = props => {
         }, {headers: { Authorization: props.token }})
             .then(res => {
                 toast.success(res.data.message);
-                props.history.push('/links');
+                navigate('/links');
             })
             .catch(err => {
                 if(err.response){

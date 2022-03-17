@@ -39,7 +39,7 @@ const Markup = props => {
     const {menuToggle} = useContext(ThemeContext);
     const adminRoutes = [
         /// Dashboard
-        {url: "", component: () => <Navigate to="/dashboard"/>},
+        {url: "", component: <Navigate to="/dashboard"/>},
         {url: "dashboard", component: <Home />},
 
         //  posts
@@ -80,7 +80,7 @@ const Markup = props => {
     ];
     const subAdminRoutes = [
         /// Dashboard
-        {url: "", component: () => <Navigate to="/dashboard"/>},
+        {url: "", component: <Navigate to="/dashboard"/>},
         {url: "dashboard", component: <Home />},
 
         //  posts

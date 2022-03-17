@@ -4,10 +4,13 @@ import {toast} from "react-toastify";
 import {token} from "../../../store/selectors/AuthSelectors";
 import {connect} from "react-redux";
 import PostDescription from "./PostDescription";
+import {useNavigate} from "react-router-dom";
 
 const NewPost = props => {
 
     const [categories, setCategories] = useState([]);
+    const [description, setDescription] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         getCategories();
@@ -29,21 +32,20 @@ const NewPost = props => {
 
     const handlePostSubmit = e => {
         e.preventDefault();
-        if(e.target.elements.title.value === '' || e.target.elements[1].value === '' || e.target.elements.slug.value === '' || e.target.elements.description.value === '' || e.target.thumbnail.value === ''){
+        if(e.target.elements.title.value === '' || e.target.elements[1].value === '' || e.target.elements.slug.value === '' || description === '' || e.target.thumbnail.value === ''){
             toast.warn('Enter all the details');
-            console.log('a');
         }else {
             const formData = new FormData();
             formData.append('title', e.target.elements.title.value);
             formData.append('categoryId', e.target.elements[1].value);
             formData.append('slug', e.target.elements.slug.value);
-            formData.append('description', e.target.elements.description.value);
+            formData.append('description', description.toString());
             formData.append('thumbnail', e.target.thumbnail.value);
 
             axios.post('/post', formData, {headers: { Authorization: props.token }})
                 .then(res => {
                     toast.success(res.data.message);
-                    props.history.push('/posts');
+                    navigate('/posts');
                 })
                 .catch(err => {
                     if(err.response){
@@ -98,7 +100,7 @@ const NewPost = props => {
 
                                 <div className="form-group mb-3">
                                     <label>Description:</label>
-                                    <PostDescription />
+                                    <PostDescription setDescription={setDescription} />
                                     {/*<textarea placeholder='Description' className="form-control" name="description" style={{resize: 'vertical', height: '200px', paddingTop: '1rem'}} />*/}
                                 </div>
 

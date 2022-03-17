@@ -3,12 +3,14 @@ import {connect, useDispatch} from 'react-redux';
 import {loadingToggleAction, loginAction,} from '../../store/actions/AuthActions';
 import logo from "../../images/logo.png";
 import loginbg from "../../images/pic1.png";
+import {useNavigate} from "react-router-dom";
 
 function Login(props) {
     const [email, setEmail] = useState('');
     let errorsObj = {email: '', password: ''};
     const [errors, setErrors] = useState(errorsObj);
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const dispatch = useDispatch();
 
@@ -29,7 +31,7 @@ function Login(props) {
             return;
         }
         dispatch(loadingToggleAction(true));
-        dispatch(loginAction(email, password, props.history));
+        dispatch(loginAction(email, password, navigate));
     }
 
     return (
