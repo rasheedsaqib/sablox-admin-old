@@ -1,11 +1,15 @@
 .wrapper-class {
-  padding: 1rem;
-  border: 1px solid #ccc;
+  background: #fff;
+  border: 0.0625rem solid #F2F2F2;
+  padding: 0.3125rem 1.25rem 4rem 1.25rem;
+  color: #6e6e6e;
+  height: 40rem;
+  border-radius: 1rem;
+  margin-bottom: 3rem;
 }
 .editor-class {
-  background-color:lightgray;
-  padding: 1rem;
-  border: 1px solid #ccc;
+  background-color: rgb(0,0,0,0.02);
+  padding: 2rem 1rem;
 }
 .toolbar-class {
   border: 1px solid #ccc;
