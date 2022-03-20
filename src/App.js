@@ -8,8 +8,6 @@ import {Route, Routes, useNavigate} from 'react-router-dom';
 import {checkAutoLogin} from './services/AuthService';
 import {isAuthenticated} from './store/selectors/AuthSelectors';
 /// Style
-import "./vendor/bootstrap-select/dist/css/bootstrap-select.min.css";
-import './vendor/datatables/css/dataTables.min.css';
 import "./css/style.css";
 
 const Login = lazy(() => {
