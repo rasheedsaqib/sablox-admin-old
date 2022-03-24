@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import "react-calendar/dist/Calendar.css";
 
 
@@ -10,9 +10,14 @@ import {toast} from "react-toastify";
 import {token} from "../../../store/selectors/AuthSelectors";
 import {connect} from "react-redux";
 import {getDailyData, getWeeklyData, getMonthlyData, getYearlyData} from "../../../services/util";
+import {ThemeContext} from "../../../context/ThemeContext";
 
 
 const Home = props => {
+
+    const {setTitle} = useContext(ThemeContext);
+    setTitle('Dashboard');
+
     const [views, setViews] = useState([]);
     const [comments, setComments] = useState([]);
     const [posts, setPosts] = useState([]);
@@ -165,25 +170,22 @@ const Home = props => {
                                     <div className="progress mb-4" style={{height: "13px"}}>
                                         <div className="progress-bar gradient-5 progress-animated"
                                              style={{width: `${(getMonthlyData(posts).length/10)*100}%`, height: "13px"}}>
-                                            <span className="sr-only">45% Posts</span>
                                         </div>
                                     </div>
                                     <div className="progress mb-4" style={{height: "13px"}}>
                                         <div className="progress-bar gradient-6 progress-animated"
                                              style={{width: `${(getMonthlyData(views).length/10)*100}%`, height: "13px"}}>
-                                            <span className="sr-only">45% Views</span>
                                         </div>
                                     </div>
                                     <div className="progress default-progress" style={{height: "13px"}}>
                                         <div className="progress-bar gradient-7 progress-animated"
                                              style={{width: `${(getMonthlyData(comments).length/10)*100}%`, height: "13px"}}>
-                                            <span className="sr-only">45% Comments</span>
                                         </div>
                                     </div>
                                     <div
                                         className="d-flex mt-4 progress-bar-legend align-items-center justify-content-between">
                                         <div className="d-flex">
-                                            <span className="marker gradient-5"></span>
+                                            <span className="marker gradient-5" />
                                             <div>
                                                 <p className="status">Post</p>
                                                 <span className="result">{getMonthlyData(posts).length}</span>

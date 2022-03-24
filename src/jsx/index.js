@@ -21,7 +21,7 @@ import Categories from "./components/Category/Categories";
 import NewCategory from "./components/Category/NewCategory";
 import EditCategory from "./components/Category/EditCategory";
 import Users from "./components/users/users";
-import Constants from "./components/constants/constants";
+import Settings from "./components/settings/settings";
 import NotFound from "./pages/NotFound";
 import EditPost from "./components/posts/EditPost";
 import EditComment from "./components/Comments/EditComment";
@@ -34,61 +34,65 @@ import {userData} from "../store/selectors/AuthSelectors";
 import {connect} from "react-redux";
 import Ads from "./components/ads/Ads";
 import NewAd from "./components/ads/NewAd";
+import Profile from "./components/profile/profile";
 
 const Markup = props => {
     const {menuToggle} = useContext(ThemeContext);
     const adminRoutes = [
         /// Dashboard
         {url: "", component: <Navigate to="/dashboard"/>},
-        {url: "dashboard", component: <Home />},
+        {url: "dashboard", component: <Home/>},
 
         //  posts
-        {url: "posts", component: <Posts />},
-        {url: "new-post", component: <NewPost />},
-        {url: "edit-post/:id", component: <EditPost />},
+        {url: "posts", component: <Posts/>},
+        {url: "new-post", component: <NewPost/>},
+        {url: "edit-post/:id", component: <EditPost/>},
 
         //  categories
-        {url: "categories", component: <Categories />},
-        {url: "new-category", component: <NewCategory />},
-        {url: "edit-category/:id", component: <EditCategory />},
+        {url: "categories", component: <Categories/>},
+        {url: "new-category", component: <NewCategory/>},
+        {url: "edit-category/:id", component: <EditCategory/>},
 
         //user
-        {url: "users", component: <Users />},
-        {url: "add-users", component: <AddUser />},
+        {url: "users", component: <Users/>},
+        {url: "add-users", component: <AddUser/>},
 
-        //constants
-        {url: 'constants', component: <Constants />},
+        //settings
+        {url: 'settings', component: <Settings/>},
 
         // comments
-        {url: "comments", component: <Comments />},
-        {url: "edit-comment/:id", component: <EditComment />},
+        {url: "comments", component: <Comments/>},
+        {url: "edit-comment/:id", component: <EditComment/>},
 
         // links
-        {url: "links", component: <Links />},
-        {url: "new-link", component: <AddLink />},
-        {url: "edit-link/:id", component: <EditLink />},
+        {url: "links", component: <Links/>},
+        {url: "new-link", component: <AddLink/>},
+        {url: "edit-link/:id", component: <EditLink/>},
 
         //subscribers
-        {url: "subscribers", component: <Subscribers />},
+        {url: "subscribers", component: <Subscribers/>},
 
         //ads
-        {url: "ads", component: <Ads />},
-        {url: "new-ad", component: <NewAd />},
+        {url: "ads", component: <Ads/>},
+        {url: "new-ad", component: <NewAd/>},
 
         //404
-        {url: "*", component: <NotFound />}
+        {url: "*", component: <NotFound/>},
+
+        //    profile
+        {url: "profile", component: <Profile />},
     ];
     const subAdminRoutes = [
         /// Dashboard
         {url: "", component: <Navigate to="/dashboard"/>},
-        {url: "dashboard", component: <Home />},
+        {url: "dashboard", component: <Home/>},
 
         //  posts
-        {url: "posts", component: <Posts />},
-        {url: "new-post", component: <NewPost />},
+        {url: "posts", component: <Posts/>},
+        {url: "new-post", component: <NewPost/>},
 
         //404
-        {url: "*", component: <NotFound />}
+        {url: "*", component: <NotFound/>}
     ];
     let path = window.location.pathname;
     path = path.split("/");

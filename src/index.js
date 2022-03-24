@@ -8,6 +8,10 @@ import reportWebVitals from "./reportWebVitals";
 import  ThemeContext  from "./context/ThemeContext";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+config.autoAddCss = false;
 
 ReactDOM.render(
 	<React.StrictMode>

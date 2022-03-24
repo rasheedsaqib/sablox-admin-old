@@ -1,19 +1,28 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import axios from "../../../services/axios";
 import {token} from "../../../store/selectors/AuthSelectors";
 import {connect} from "react-redux";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
+import {ThemeContext} from "../../../context/ThemeContext";
 
 const EditComment = props => {
 
+    const {setTitle} = useContext(ThemeContext);
+    setTitle('Edit Comment');
+
+    const [loading, setLoading] = useState(false);
+
     const [comment, setComment] = useState({});
     const navigate = useNavigate();
+    const params = useParams();
 
     useEffect(() => {
-        axios.get('/comment/' + props.match.params.id)
+        setLoading(true);
+        axios.get('/comment/' + params.id)
             .then(res => {
                 setComment(res.data);
+                setLoading(false);
             })
             .catch(err => {
                 if (err.response) {
@@ -21,14 +30,17 @@ const EditComment = props => {
                 } else {
                     toast.error(err.message);
                 }
+                setLoading(false);
             })
-    }, [props.match.params.id]);
+    }, [params.id]);
 
     const handleSubmit = e => {
         e.preventDefault();
-        axios.put(`/comment/${props.match.params.id}`, comment, {headers: { Authorization: props.token }})
+        setLoading(true);
+        axios.put(`/comment/${params.id}`, comment, {headers: { Authorization: props.token }})
             .then(res => {
                 toast.success(res.data.message);
+                setLoading(false);
                 navigate('/comments');
             })
             .catch(err => {
@@ -37,42 +49,44 @@ const EditComment = props => {
                 } else {
                     toast.error(err.message);
                 }
+                setLoading(false);
             })
     }
 
     return (
         <>
-            {comment ?
-                <div className="col-xl-12 col-lg-12">
-                    <div className="card">
-                        <div className="card-header">
-                            <h4 className="card-title">Enter category details</h4>
-                        </div>
-                        <div className="card-body">
-                            <div className="basic-form">
-                                <form onSubmit={e => handleSubmit(e)}>
-                                    <div className="form-group mb-3">
-                                        <label>Name:</label>
-                                        <input
-                                            type="text"
-                                            className="form-control input-default "
-                                            placeholder="Name"
-                                            name='content'
-                                            value={comment.content}
-                                            onChange={e => setComment({...comment, content: e.target.value})}
-                                        />
-                                    </div>
+            {loading ? <p>Loading...</p>
+                : comment ?
+                    <div className="col-xl-12 col-lg-12">
+                        <div className="card">
+                            <div className="card-header">
+                                <h4 className="card-title">Enter category details</h4>
+                            </div>
+                            <div className="card-body">
+                                <div className="basic-form">
+                                    <form onSubmit={e => handleSubmit(e)}>
+                                        <div className="form-group mb-3">
+                                            <label>Name:</label>
+                                            <input
+                                                type="text"
+                                                className="form-control input-default "
+                                                placeholder="Name"
+                                                name='content'
+                                                value={comment.content}
+                                                onChange={e => setComment({...comment, content: e.target.value})}
+                                            />
+                                        </div>
 
-                                    <button type="submit" className="btn btn-primary">
-                                        Edit
-                                    </button>
-                                </form>
+                                        <button type="submit" className="btn btn-primary">
+                                            Edit
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                :
-                <p>Loading</p>
+                    :
+                    <p>Comment not found!</p>
             }
         </>
     )

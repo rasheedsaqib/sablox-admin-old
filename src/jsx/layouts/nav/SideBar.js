@@ -57,7 +57,7 @@ const SideBar = props => {
         users = ['users', 'add-user'],
         links = ['links', 'new-link'],
         comments = ['comments'],
-        constants = ['constants'],
+        settings = ['settings'],
         subscribers = ['subscribers'],
         ads = ['ads', 'new-ad'];
 
@@ -163,20 +163,6 @@ const SideBar = props => {
                                 </ul>
                             </li>
 
-                            <li className={`${constants.includes(path) ? "mm-active" : ""}`}>
-                                <Link className="has-arrow ai-icon" to="#">
-                                    <i className="flaticon-022-copy"/>
-                                    <span className="nav-text">Constants</span>
-                                </Link>
-                                <ul>
-                                    <li>
-                                        <Link className={`${path === "constants" ? "mm-active" : ""}`} to="/constants">
-                                            Update
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </li>
-
                             <li className={`${links.includes(path) ? "mm-active" : ""}`}>
                                 <Link className="has-arrow ai-icon" to="#">
                                     <i className="flaticon-022-copy"/>
@@ -228,6 +214,20 @@ const SideBar = props => {
                                         <Link className={`${path === "new-ad" ? "mm-active" : ""}`}
                                               to="/new-ad">
                                             New Ad
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li className={`${settings.includes(path) ? "mm-active" : ""}`}>
+                                <Link className="has-arrow ai-icon" to="#">
+                                    <i className="flaticon-022-copy"/>
+                                    <span className="nav-text">Settings</span>
+                                </Link>
+                                <ul>
+                                    <li>
+                                        <Link className={`${path === "settings" ? "mm-active" : ""}`} to="/settings">
+                                            Update
                                         </Link>
                                     </li>
                                 </ul>

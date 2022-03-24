@@ -1,16 +1,22 @@
-import React from "react";
+import React, {useContext} from "react";
 import axios from "../../../services/axios";
 import {toast} from "react-toastify";
 import {token} from "../../../store/selectors/AuthSelectors";
 import {connect} from "react-redux";
 import {useNavigate} from "react-router-dom";
+import {ThemeContext} from "../../../context/ThemeContext";
 
 const AddLink = props => {
+
+    const {setTitle} = useContext(ThemeContext);
+    setTitle('Add Link');
+    const [loading, setLoading] = React.useState(false);
 
     const navigate = useNavigate();
 
     const handleNewLink = e => {
         e.preventDefault();
+        setLoading(true);
         const { link, title, expiry } = e.target;
         console.log(link.value, title.value, expiry.value);
         axios.post('/link', {
@@ -20,6 +26,7 @@ const AddLink = props => {
         }, {headers: { Authorization: props.token }})
             .then(res => {
                 toast.success(res.data.message);
+                setLoading(false);
                 navigate('/links');
             })
             .catch(err => {
@@ -28,6 +35,7 @@ const AddLink = props => {
                 }else {
                     toast.error(err.message);
                 }
+                setLoading(false);
             });
     };
 
@@ -74,8 +82,8 @@ const AddLink = props => {
                                 />
                             </div>
 
-                            <button type="submit" className="btn btn-primary">
-                                Add
+                            <button type="submit" className={`btn btn-primary ${loading ? 'disabled' : ''}`}>
+                                {loading ? 'Loading...' : 'Submit'}
                             </button>
                         </form>
                     </div>

@@ -1,15 +1,20 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import axios from "../../../services/axios";
 import {toast} from "react-toastify";
 import {token} from "../../../store/selectors/AuthSelectors";
 import {connect} from "react-redux";
 import PostDescription from "./PostDescription";
 import {useNavigate} from "react-router-dom";
+import {ThemeContext} from "../../../context/ThemeContext";
 
 const NewPost = props => {
 
+    const {setTitle} = useContext(ThemeContext);
+    setTitle('New Post');
+
     const [categories, setCategories] = useState([]);
     const [description, setDescription] = useState('');
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -35,6 +40,7 @@ const NewPost = props => {
         if(e.target.elements.title.value === '' || e.target.elements[1].value === '' || e.target.elements.slug.value === '' || description === '' || e.target.thumbnail.value === ''){
             toast.warn('Enter all the details');
         }else {
+            setLoading(true);
             const formData = new FormData();
             formData.append('title', e.target.elements.title.value);
             formData.append('categoryId', e.target.elements[1].value);
@@ -45,6 +51,7 @@ const NewPost = props => {
             axios.post('/post', formData, {headers: { Authorization: props.token }})
                 .then(res => {
                     toast.success(res.data.message);
+                    setLoading(false);
                     navigate('/posts');
                 })
                 .catch(err => {
@@ -53,6 +60,7 @@ const NewPost = props => {
                     }else {
                         toast.error(err.message);
                     }
+                    setLoading(false);
                 });
         }
     }
@@ -101,7 +109,6 @@ const NewPost = props => {
                                 <div className="form-group mb-3">
                                     <label>Description:</label>
                                     <PostDescription setDescription={setDescription} />
-                                    {/*<textarea placeholder='Description' className="form-control" name="description" style={{resize: 'vertical', height: '200px', paddingTop: '1rem'}} />*/}
                                 </div>
 
                                 <div className="form-group mb-3">
@@ -114,8 +121,8 @@ const NewPost = props => {
                                     />
                                 </div>
 
-                                <button type="submit" className="btn btn-primary">
-                                    Post
+                                <button type="submit" className={`btn btn-primary ${loading ? 'disabled' : ''}`}>
+                                    {loading ? 'Loading' : 'Submit'}
                                 </button>
 
                             </form>

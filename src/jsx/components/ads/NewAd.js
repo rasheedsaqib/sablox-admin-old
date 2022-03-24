@@ -1,20 +1,27 @@
-import React from "react";
+import React, {useContext} from "react";
 import axios from "../../../services/axios";
 import {token} from "../../../store/selectors/AuthSelectors";
 import {connect} from "react-redux";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
+import {ThemeContext} from "../../../context/ThemeContext";
 
 const NewAd = props => {
     const navigate = useNavigate();
+    const {setTitle} = useContext(ThemeContext);
+    setTitle('Add new ad');
+
+    const [loading, setLoading] = React.useState(false);
 
     const handleNewAd = (e) => {
         e.preventDefault();
+        setLoading(true);
         axios.post('/code', {
             title: e.target.elements.title.value,
             jsx: e.target.elements.jsx.value
         }, {headers: {Authorization: props.token}})
             .then(res => {
+                setLoading(false);
                 toast.success(res.data.message);
                 navigate('/ads');
             })
@@ -24,6 +31,7 @@ const NewAd = props => {
                 } else {
                     toast.error(err.message);
                 }
+                setLoading(false);
             });
     }
 
@@ -54,8 +62,8 @@ const NewAd = props => {
                                           style={{resize: 'vertical', height: '100px', paddingTop: '1rem'}}/>
                             </div>
 
-                            <button type="submit" className="btn btn-primary">
-                                Add
+                            <button type="submit" className={`btn btn-primary ${loading ? 'disabled' : ''}`}>
+                                {loading ? 'Loading...' : 'Add ad'}
                             </button>
                         </form>
                     </div>

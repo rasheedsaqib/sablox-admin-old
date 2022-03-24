@@ -5,6 +5,7 @@ export const ThemeContext = createContext();
 const ThemeContextProvider = (props) => {
 
     const body = document.querySelector("body");
+    const [title, setTitle] = useState("Dashboard");
     const [windowWidth, setWindowWidth] = useState(0);
     const [windowHeight, setWindowHeight] = useState(0);
     const [iconHover, setIconHover] = useState(false);
@@ -91,6 +92,8 @@ const ThemeContextProvider = (props) => {
         <ThemeContext.Provider
             value={{
                 body,
+                title,
+                setTitle,
                 sidebarposition,
                 windowWidth,
                 windowHeight,

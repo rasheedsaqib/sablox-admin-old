@@ -10,3 +10,7 @@ export const userData = (state) => {
 export const token = (state) => {
     return state.auth.auth.idToken;
 }
+
+export const auth = state => {
+    return state.auth.auth;
+}

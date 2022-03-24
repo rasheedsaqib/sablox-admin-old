@@ -1,23 +1,30 @@
-import React from "react";
+import React, {useContext} from "react";
 import {toast} from "react-toastify";
 import axios from "../../../services/axios";
 import {token} from "../../../store/selectors/AuthSelectors";
 import {connect} from "react-redux";
 import {useNavigate} from "react-router-dom";
+import {ThemeContext} from "../../../context/ThemeContext";
 
 const NewCategory = props => {
 
     const navigate = useNavigate();
+    const {setTitle} = useContext(ThemeContext);
+    setTitle('New Category');
+    const [loading, setLoading] = React.useState(false);
 
     const handleNewCategory = e => {
         e.preventDefault();
+        setLoading(true);
         if(e.target.elements.name.value === ''){
             toast.warn('Enter name');
+            setLoading(false);
         }else {
             axios.post('/category', {name: e.target.elements.name.value}, {headers: { Authorization: props.token }})
                 .then(res => {
                     toast.success(res.data.message);
                     navigate('/categories');
+                    setLoading(false);
                 })
                 .catch(err => {
                     if(err.response){
@@ -25,6 +32,7 @@ const NewCategory = props => {
                     }else {
                         toast.error(err.message);
                     }
+                    setLoading(false);
                 });
         }
     }
@@ -48,8 +56,8 @@ const NewCategory = props => {
                                 />
                             </div>
 
-                            <button type="submit" className="btn btn-primary">
-                                Add
+                            <button type="submit" className={`btn btn-primary ${loading ? 'disabled' : ''}`}>
+                                {loading ? 'Loading...' : 'Submit'}
                             </button>
                         </form>
                     </div>
