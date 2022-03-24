@@ -1,12 +1,6 @@
-form#step-form-horizontal > div:last-child {
-  /* text-align: right; */
-  /* padding-top: 2rem; */
-}
-
 form#step-form-horizontal .form-group .text-label {
   text-align: left;
   display: block;
-  /* padding-top: 2rem; */
 }
 [data-primary="color_2"] .wizard > .steps li.current a {
   background-color: #EB8153;
